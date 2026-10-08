@@ -11,7 +11,21 @@
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
-    <header class="grid-container">
+    <div data-sticky-container>
+      <nav class="resume-nav" data-sticky data-margin-top="0" data-sticky-on="small">
+        <ul class="menu align-center" data-magellan data-offset="60">
+          <li><a href="#profile">Profile</a></li>
+          <li><a href="#awards">Awards</a></li>
+          <li><a href="#experience">Work</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#availability">Hours</a></li>
+          <li><a href="#education">School</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <header class="grid-container" id="profile" data-magellan-target="profile">
       <div class="grid-x grid-padding-x">
         <div class="cell">
           <div class="card profile-card-action-icons">
@@ -63,7 +77,7 @@
     </header>
 
     <main class="grid-container">
-      <section class="grid-x grid-padding-x">
+      <section class="grid-x grid-padding-x" id="awards" data-magellan-target="awards">
         <div class="cell">
           <h2>Accomplishments</h2>
           <ul class="awards">
@@ -73,7 +87,7 @@
         </div>
       </section>
 
-      <section class="grid-x grid-padding-x">
+      <section class="grid-x grid-padding-x" id="experience" data-magellan-target="experience">
         <div class="cell">
           <h2>Professional Experience</h2>
           <article>
@@ -110,7 +124,7 @@
         </div>
       </section>
 
-      <section class="grid-x grid-padding-x">
+      <section class="grid-x grid-padding-x" id="projects" data-magellan-target="projects">
         <div class="cell">
           <h2>Projects</h2>
           <div class="work-feature-block grid-x grid-padding-x">
@@ -132,7 +146,7 @@
         </div>
       </section>
 
-      <section class="grid-x grid-padding-x">
+      <section class="grid-x grid-padding-x" id="availability" data-magellan-target="availability">
         <div class="cell">
           <h2>Availability</h2>
           <ul class="availability">
@@ -147,7 +161,7 @@
         </div>
       </section>
 
-      <section class="grid-x grid-padding-x">
+      <section class="grid-x grid-padding-x" id="education" data-magellan-target="education">
         <div class="cell">
           <h2>Education</h2>
           <article>
@@ -166,7 +180,7 @@
       </section>
     </main>
 
-    <footer class="contact-us-section">
+    <footer class="contact-us-section" id="contact" data-magellan-target="contact">
       <div class="grid-container">
         <div class="grid-x grid-padding-x">
           <div class="medium-6 cell contact-us-section-left">
