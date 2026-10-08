@@ -1,0 +1,76 @@
+.contact-us-section {
+  padding: 2rem 0;
+  background: #fefefe;
+  border-top: 2px solid #e6e6e6;
+}
+
+.contact-us-section .contact-us-section-left {
+  border-bottom: 2px solid #e6e6e6;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.contact-us-section .contact-us-header {
+  margin-bottom: 2rem;
+}
+
+.contact-us-list {
+  list-style-type: none;
+  margin: 0;
+}
+
+.contact-us-list li {
+  margin-bottom: 1rem;
+}
+
+.contact-us-list li a {
+  color: #0a0a0a;
+}
+
+.contact-us-list li::before {
+  display: inline-block;
+  width: 2rem;
+  margin-right: 1rem;
+  font-size: 2rem;
+  vertical-align: middle;
+  text-align: center;
+  color: #8a8a8a;
+  font-family: 'FontAwesome';
+}
+
+.contact-us-list .address::before {
+  content: '\f041';
+}
+
+.contact-us-list .email::before {
+  content: '\f003';
+}
+
+.contact-us-list .phone::before {
+  content: '\f098';
+}
+
+.linkedin-button {
+  background-color: #007bb5;
+  border-radius: 5000px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.linkedin-button:hover,
+.linkedin-button:focus {
+  background-color: #005983;
+}
+
+@media screen and (min-width: 40em) {
+  .contact-us-section .contact-us-section-left {
+    border-right: 1px solid #e6e6e6;
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .contact-us-section .contact-us-section-right {
+    padding-left: 2rem;
+  }
+}
