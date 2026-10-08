@@ -1,3 +1,68 @@
+.profile-card-action-icons {
+  margin-top: 2rem;
+  background: #fefefe;
+  border: 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 1rem rgba(10, 10, 10, 0.15);
+}
+
+.profile-card-action-icons .card-section {
+  padding: 2rem 1.5rem;
+}
+
+.profile-card-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-card-header .avatar-image {
+  display: block;
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.25rem solid #e6e6e6;
+}
+
+.profile-card-header .author-title {
+  margin-bottom: 0;
+}
+
+.profile-card-header .author-description {
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 0;
+}
+
+.profile-card-about .about-title,
+.profile-card-about .about-skills {
+  font-size: 1.5rem;
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 0.5rem;
+}
+
+ul.arrow {
+  list-style-type: none;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+ul.arrow li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+ul.arrow li::before {
+  content: '\f006';
+  font-family: 'FontAwesome';
+  color: #1779ba;
+  position: absolute;
+  left: 0;
+}
+
 .contact-us-section {
   padding: 2rem 0;
   background: #fefefe;
@@ -63,6 +128,16 @@
 }
 
 @media screen and (min-width: 40em) {
+  .profile-card-header {
+    display: flex;
+    align-items: center;
+    text-align: left;
+  }
+
+  .profile-card-header .avatar-image {
+    margin: 0 2rem 0 0;
+  }
+
   .contact-us-section .contact-us-section-left {
     border-right: 1px solid #e6e6e6;
     border-bottom: 0;
