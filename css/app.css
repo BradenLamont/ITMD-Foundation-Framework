@@ -166,7 +166,40 @@ ul.arrow li::before {
   max-width: 18rem;
 }
 
+.experience-accordion .accordion-title {
+  font-size: 1rem;
+  color: #0a2540;
+}
+
+.experience-accordion .job-title {
+  display: block;
+  font-weight: bold;
+}
+
+.experience-accordion .job-dates {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  color: #8a8a8a;
+}
+
+.experience-accordion .job-location {
+  font-style: italic;
+  color: #8a8a8a;
+}
+
 @media screen and (min-width: 40em) {
+  .experience-accordion .job-title {
+    display: inline;
+  }
+
+  .experience-accordion .job-dates {
+    display: inline;
+    float: right;
+    margin-top: 0;
+    margin-right: 1.5rem;
+  }
+
   .resume-nav .menu a {
     font-size: 1rem;
     padding: 1rem 1.5rem;
