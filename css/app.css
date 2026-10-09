@@ -200,6 +200,22 @@ ul.arrow li::before {
   color: #fefefe;
 }
 
+.degree-progress-text {
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  color: #8a8a8a;
+}
+
+.degree-progress {
+  height: 1.5rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.credits-meter {
+  width: 70%;
+}
+
 @media screen and (min-width: 40em) {
   .experience-accordion .job-title {
     display: inline;
