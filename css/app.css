@@ -188,6 +188,21 @@ ul.arrow li::before {
   color: #8a8a8a;
 }
 
+.tabs-panel .work-feature-block {
+  border: 0;
+  margin-bottom: 0;
+}
+
+.tabs-title > a {
+  color: #0a2540;
+}
+
+.tabs-title > a:focus,
+.tabs-title > a[aria-selected='true'] {
+  background-color: #0a2540;
+  color: #fefefe;
+}
+
 @media screen and (min-width: 40em) {
   .experience-accordion .job-title {
     display: inline;
