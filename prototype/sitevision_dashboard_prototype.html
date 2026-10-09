@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiteVision AI — Prototype Dashboard</title>
+<style>
+:root{
+  --bg:#07131d; --panel:#0e1c27; --panel2:#101f2b; --line:#223544;
+  --text:#f4f7fa; --muted:#94a4b3; --blue:#2f8cff; --blue2:#1673dc;
+  --green:#25d47b; --yellow:#ffb52e; --orange:#ff7445; --red:#ff5f4a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 65% 0%,#102331 0,#07131d 45%,#061019 100%);
+font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+button,select{font:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{width:214px;background:rgba(7,20,30,.92);border-right:1px solid #102432;padding:20px 10px;display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:700;padding:2px 14px 22px}
+.brand-mark{width:28px;display:grid;grid-template-columns:repeat(2,10px);gap:6px}
+.brand-mark i{width:10px;height:10px;border-radius:50%;background:#3d8cf5;display:block}
+.brand em{color:#368ef4;font-style:normal}
+.nav{display:grid;gap:6px}
+.nav button{border:0;background:transparent;color:#bdc9d4;text-align:left;padding:13px 16px;border-radius:9px;display:flex;gap:14px;align-items:center;cursor:pointer;font-size:15px}
+.nav button:hover,.nav button.active{background:linear-gradient(90deg,#12375a,#102b43);color:#fff}
+.nav .icon{width:22px;text-align:center;font-size:19px}
+.site-bottom{margin-top:auto;border-top:1px solid #1c2d39;padding:16px 14px 0;color:#b8c4cf;display:flex;justify-content:space-between}
+.main{margin-left:214px;width:calc(100% - 214px);padding:22px 18px 28px}
+.topbar{height:52px;display:flex;justify-content:flex-end;align-items:center;gap:22px;margin-bottom:10px}
+.site-select{background:transparent;color:#fff;border:0;font-size:16px;font-weight:500;outline:0}
+.top-icon{font-size:23px;color:#dbe4ec;cursor:pointer}
+.dashboard{display:grid;grid-template-columns:1.02fr .98fr;gap:14px}
+.card{background:linear-gradient(145deg,rgba(16,31,43,.97),rgba(11,25,35,.97));border:1px solid #263b4a;border-radius:11px;box-shadow:0 10px 30px rgba(0,0,0,.12);overflow:hidden}
+.card-head{height:69px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1d303e}
+.title{font-size:18px;font-weight:650;display:flex;align-items:center;gap:11px}
+.link{color:#3994ff;cursor:pointer;font-size:14px}
+.live{color:#2ae07f;font-size:14px}.live:before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:#27d77b;margin-right:7px}
+.feed-wrap{padding:0 5px 7px}
+.feed{margin:0;height:380px;border-radius:10px;overflow:hidden;position:relative;background:#182a34 center/cover no-repeat url("sitevision_live_feed.jpg")}
+.feed:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),transparent 60%,rgba(0,0,0,.45))}
+.feed-label{position:absolute;z-index:2;bottom:18px;left:20px;font-size:15px}
+.fullscreen{position:absolute;right:14px;bottom:13px;z-index:2;background:rgba(4,12,18,.6);border:1px solid #60707b;color:#fff;border-radius:7px;padding:7px 9px;cursor:pointer}
+.recordings{height:450px}
+.filters{padding:14px 20px 10px;display:flex;gap:10px}
+.filter{background:#0b1721;border:1px solid #2a3c49;color:#dfe7ed;border-radius:6px;padding:10px 12px;min-width:180px;cursor:pointer}
+.record-list{padding:0 20px}
+.record{height:81px;border-top:1px solid #223440;display:grid;grid-template-columns:104px 1fr 36px;gap:12px;align-items:center;cursor:pointer}
+.record:hover{background:#10212d}
+.thumb{width:104px;height:60px;border-radius:7px;background:center/cover url("sitevision_live_feed.jpg");filter:saturate(.8)}
+.r-title{font-size:14px}.r-sub{font-size:14px;color:#b7c3cc;margin-top:4px}.r-date{font-size:11px;color:#8b9aa8;float:right;margin-right:10px}
+.play{width:30px;height:30px;border:1px solid #71808c;border-radius:50%;display:grid;place-items:center;color:#fff}
+.bottom-card{min-height:408px}
+.notice{margin:0 20px;border-bottom:1px solid #20333f;padding:17px 0;display:grid;grid-template-columns:40px 1fr 70px 18px;gap:10px;align-items:center;cursor:pointer}
+.notice:hover{background:#10212d}
+.badge-icon{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:17px}
+.badge-icon.red{background:#3a1e1b;color:#ff6b55}.badge-icon.yellow{background:#3b2b14;color:#ffb52e}.badge-icon.blue{background:#163b72;color:#6ca9ff}
+.notice strong{font-size:14px}.notice .meta{font-size:14px;color:#b9c4ce;margin-top:4px}.notice time{font-size:11px;color:#9ba9b4;text-align:right}.chev{color:#9daab4}
+.report{margin:0 20px;border-bottom:1px solid #20333f;padding:16px 0;display:grid;grid-template-columns:40px 1fr 70px 25px;gap:10px;align-items:center;cursor:pointer}
+.report:hover{background:#10212d}.doc{font-size:27px;color:#c6d0d8}.report-title{font-size:14px}.report-sub{font-size:14px;color:#aebbc5;margin-top:4px}
+.issue{display:inline-block;font-size:11px;padding:5px 8px;border-radius:7px;background:#3d2618;color:#ffb32e;margin-left:8px}
+.issue.red{background:#45241e;color:#ff7253}.issue.green{background:#123a28;color:#5fe59a}
+.download{font-size:21px;color:#aebac3}
+.panel{display:none}.panel.active{display:block}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.kpi{padding:18px;border:1px solid #263b4a;border-radius:10px;background:#0e1c27}.kpi small{color:#8fa0ae}.kpi b{display:block;font-size:27px;margin-top:8px}.up{color:#32d981;font-size:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;place-items:center;z-index:20}
+.modal.open{display:grid}.modal-box{width:min(760px,92vw);background:#0d1b26;border:1px solid #2b4352;border-radius:12px;padding:22px;box-shadow:0 20px 70px #000}
+.modal-head{display:flex;justify-content:space-between;align-items:center}.close{background:none;border:0;color:#fff;font-size:25px;cursor:pointer}.modal img{width:100%;border-radius:8px;margin-top:15px}
+.toast{position:fixed;right:22px;bottom:22px;background:#112b3b;border:1px solid #31516a;padding:13px 16px;border-radius:9px;display:none;z-index:30}
+.toast.show{display:block}
+@media(max-width:1000px){.sidebar{width:72px}.brand span,.nav button span,.site-bottom span{display:none}.nav button{justify-content:center}.main{margin-left:72px;width:calc(100% - 72px)}.dashboard{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.main{padding:10px}.topbar{justify-content:space-between}.dashboard{display:block}.card{margin-bottom:12px}.feed{height:280px}.recordings{height:auto}.kpis{grid-template-columns:1fr 1fr}.record{grid-template-columns:80px 1fr 30px}.thumb{width:80px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>SiteVision <em>AI</em></span></div>
+  <nav class="nav">
+    <button class="active" data-panel="dashboard"><span class="icon">▦</span><span>Dashboard</span></button>
+    <button data-panel="live"><span class="icon">▣</span><span>Live Feed</span></button>
+    <button data-panel="recordings"><span class="icon">▷</span><span>Recordings</span></button>
+    <button data-panel="notifications"><span class="icon">♧</span><span>Notifications</span></button>
+    <button data-panel="reports"><span class="icon">▤</span><span>Infrastructure Reports</span></button>
+  </nav>
+  <div class="site-bottom"><span>♙ &nbsp; Site A</span><span>⌄</span></div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <select class="site-select" id="siteSelect">
+      <option>◉ &nbsp; Site A — Main Parking Lot</option>
+      <option>◉ &nbsp; Site B — Truck Yard</option>
+      <option>◉ &nbsp; Site C — Distribution Center</option>
+    </select>
+    <span class="top-icon" id="themeBtn" title="Toggle contrast">☼</span>
+    <span class="top-icon">◯</span>
+  </header>
+
+  <section id="dashboard" class="panel active">
+    <div class="dashboard">
+      <section class="card">
+        <div class="card-head"><div class="title">▣ &nbsp; Live Feed</div><div class="live">LIVE</div></div>
+        <div class="feed-wrap"><div class="feed" id="liveFeed"><div class="feed-label">CAM 01 — Parking Lot Entrance</div><button class="fullscreen" id="fullBtn">⛶</button></div></div>
+      </section>
+      <section class="card recordings">
+        <div class="card-head"><div class="title">▷ &nbsp; Recordings</div><div class="link" data-panel-link="recordings">View all</div></div>
+        <div class="filters"><select class="filter" id="dateFilter"><option>▣ &nbsp; May 29, 2025</option><option>▣ &nbsp; May 28, 2025</option><option>▣ &nbsp; May 27, 2025</option></select><select class="filter" id="camFilter"><option>⚱ &nbsp; All Cameras</option><option>CAM 01</option><option>CAM 02</option><option>CAM 03</option><option>CAM 04</option></select></div>
+        <div class="record-list" id="recordList"></div>
+      </section>
+
+      <section class="card bottom-card">
+        <div class="card-head"><div class="title">♧ &nbsp; Notifications</div><div class="link" data-panel-link="notifications">View all</div></div>
+        <div id="noticeList"></div>
+      </section>
+
+      <section class="card bottom-card">
+        <div class="card-head"><div class="title">▤ &nbsp; Infrastructure Reports</div><div class="link" data-panel-link="reports">View all</div></div>
+        <div id="reportList"></div>
+      </section>
+    </div>
+  </section>
+
+  <section id="live" class="panel">
+    <div class="kpis"><div class="kpi"><small>Active Cameras</small><b>4 / 4</b><span class="up">● All systems online</span></div><div class="kpi"><small>AI Detections Today</small><b>17</b><span class="up">+21% vs. yesterday</span></div><div class="kpi"><small>Open Issues</small><b>3</b><span class="up">2 high priority</span></div><div class="kpi"><small>Coverage</small><b>98.6%</b><span class="up">Last 24 hours</span></div></div>
+    <div class="card"><div class="card-head"><div class="title">▣ &nbsp; Live Camera Monitoring</div><div class="live">4 CAMERAS ONLINE</div></div><div style="padding:12px"><div class="feed" style="height:620px"><div class="feed-label">CAM 01 — Parking Lot Entrance</div></div></div></div>
+  </section>
+
+  <section id="recordings" class="panel">
+    <div class="card"><div class="card-head"><div class="title">▷ &nbsp; Recording Library</div><div class="link">24 recordings</div></div><div class="filters"><select class="filter"><option>All Dates</option><option>May 29, 2025</option><option>May 28, 2025</option></select><select class="filter"><option>All Cameras</option><option>CAM 01</option><option>CAM 02</option></select></div><div class="record-list" id="recordListFull"></div></div>
+  </section>
+
+  <section id="notifications" class="panel">
+    <div class="card"><div class="card-head"><div class="title">♧ &nbsp; AI Notifications</div><div class="link">Mark all read</div></div><div id="noticeListFull"></div></div>
+  </section>
+
+  <section id="reports" class="panel">
+    <div class="card"><div class="card-head"><div class="title">▤ &nbsp; Infrastructure Reports</div><div class="link">Generate report</div></div><div id="reportListFull"></div></div>
+  </section>
+</main>
+</div>
+
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><strong id="modalTitle">Camera View</strong><button class="close" id="close">×</button></div><img src="sitevision_live_feed.jpg" alt="Parking lot camera view"><p id="modalText" style="color:#aebbc5"></p></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const recordings=[
+ ["8:30 AM","CAM 01 – Parking Lot Entrance","May 29, 2025"],
+ ["6:30 AM","CAM 02 – North Lot","May 29, 2025"],
+ ["4:30 AM","CAM 03 – Loading Dock","May 29, 2025"],
+ ["2:30 AM","CAM 04 – South Lot","May 29, 2025"]
+];
+const notices=[
+ ["red","⚠","High Severity: Large crack detected","CAM 01 – Parking Lot Entrance","2 min ago"],
+ ["yellow","▲","Medium Severity: Pothole detected","CAM 02 – North Lot","15 min ago"],
+ ["blue","i","Inspection complete","CAM 03 – Loading Dock","1 hr ago"],
+ ["blue","i","Report generated","Weekly Infrastructure Report – May 29, 2025","2 hr ago"]
+];
+const reports=[
+ ["Weekly Infrastructure Report","May 29 – Jun 4, 2025","3 Issues","red"],
+ ["Pavement Condition Report","May 2025","5 Issues",""],
+ ["Monthly Infrastructure Report","April 2025","2 Issues",""],
+ ["Pavement Condition Report","March 2025","0 Issues","green"]
+];
+
+function renderRecords(target){
+  document.querySelector(target).innerHTML=recordings.map((r,i)=>`
+    <div class="record" onclick="openRecording(${i})">
+      <div class="thumb" style="background-position:${i*12}% center"></div>
+      <div><div class="r-title"><b>${r[0]}</b></div><div class="r-sub">${r[1]} <span class="r-date">${r[2]}</span></div></div>
+      <div class="play">▶</div>
+    </div>`).join("");
+}
+function renderNotices(target){
+  document.querySelector(target).innerHTML=notices.map((n,i)=>`
+    <div class="notice" onclick="notifyClick(${i})">
+      <div class="badge-icon ${n[0]}">${n[1]}</div>
+      <div><strong>${n[2]}</strong><div class="meta">${n[3]}</div></div>
+      <time>${n[4]}</time><div class="chev">›</div>
+    </div>`).join("");
+}
+function renderReports(target){
+  document.querySelector(target).innerHTML=reports.map((r,i)=>`
+    <div class="report" onclick="downloadReport(${i})">
+      <div class="doc">▤</div><div><div class="report-title">${r[0]}</div><div class="report-sub">${r[1]} <span class="issue ${r[3]}">${r[2]}</span></div></div>
+      <div></div><div class="download">⇩</div>
+    </div>`).join("");
+}
+renderRecords("#recordList"); renderRecords("#recordListFull");
+renderNotices("#noticeList"); renderNotices("#noticeListFull");
+renderReports("#reportList"); renderReports("#reportListFull");
+
+function switchPanel(id){
+ document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.panel===id));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>switchPanel(b.dataset.panel)));
+document.querySelectorAll("[data-panel-link]").forEach(b=>b.addEventListener("click",()=>switchPanel(b.dataset.panelLink)));
+
+const modal=document.getElementById("modal"), toast=document.getElementById("toast");
+function showToast(t){toast.textContent=t;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2200)}
+function openRecording(i){modal.classList.add("open");document.getElementById("modalTitle").textContent=recordings[i][1];document.getElementById("modalText").textContent=`Recording captured at ${recordings[i][0]} on ${recordings[i][2]}. Prototype playback view.`}
+function notifyClick(i){showToast(`Opened: ${notices[i][2]}`)}
+function downloadReport(i){showToast(`Preparing ${reports[i][0]}…`)}
+document.getElementById("close").onclick=()=>modal.classList.remove("open");
+modal.onclick=e=>{if(e.target===modal)modal.classList.remove("open")};
+document.getElementById("fullBtn").onclick=()=>{modal.classList.add("open");document.getElementById("modalTitle").textContent="CAM 01 — Parking Lot Entrance";document.getElementById("modalText").textContent="Live camera prototype. Fullscreen playback can be connected to your camera/streaming service."};
+document.getElementById("siteSelect").onchange=e=>showToast(`Switched to ${e.target.value.replace("◉ ","")}`);
+document.getElementById("themeBtn").onclick=()=>{document.body.style.filter=document.body.style.filter?"":"brightness(1.18)";showToast("Display mode toggled")};
+document.getElementById("camFilter").onchange=e=>showToast(`Filter: ${e.target.value}`);
+document.getElementById("dateFilter").onchange=e=>showToast(`Date: ${e.target.value}`);
+</script>
+</body>
+</html>
